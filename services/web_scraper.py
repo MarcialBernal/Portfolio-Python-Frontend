@@ -49,7 +49,7 @@ def get_item_info(url):
 ###
 def save_to_excel(data):
     df = pd.DataFrame(data)
-    os.makedirs("temp", exist_ok=True)
+    os.makedirs("tmp", exist_ok=True)
     file_name = os.path.join("tmp", "search.xlsx")
     df.to_excel(file_name, index=False)
     
