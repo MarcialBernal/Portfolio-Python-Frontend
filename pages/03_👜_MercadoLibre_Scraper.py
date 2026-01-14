@@ -1,10 +1,13 @@
 import streamlit as st
 import pandas as pd
 import os
-from services.web_scraper import run_scraper
+from datetime import datetime
+from services.web_scraper.usecases import ScraperUsecase
 
 st.set_page_config(layout="wide")
-st.title('''WEB SCRAPPER Mercado Libre''')
+st.title('WEB SCRAPER Mercado Libre')
+
+scraper_uc = ScraperUsecase()
 
 col1, col2 = st.columns([3,4])
 
@@ -12,11 +15,18 @@ with col1:
     search_query = st.text_input("Input an item to search on Mercado Libre:")
 
     if search_query:
-        st.write(f"Search results of item: {search_query}")
+        st.write(f"Search results for: {search_query}")
 
-        df, file_name = run_scraper(search_query)
+        data = scraper_uc.search_items(search_query)
 
-        if not df.empty:
+        if data:
+            df = pd.DataFrame(data)
+
+            # Guardar Excel temporalmente
+            os.makedirs("tmp", exist_ok=True)
+            file_name = os.path.join("tmp", f"search_{datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx")
+            df.to_excel(file_name, index=False)
+
             st.dataframe(df, use_container_width=True)
 
             with open(file_name, "rb") as f:
@@ -34,23 +44,17 @@ with col1:
         else:
             st.error("No items found")
 
-
 with col2:
     st.markdown(
         """
         ### About this project
-        A Python-based web scraping tool that extracts product data from MercadoLibre México using a search query.
+        Python-based web scraper for MercadoLibre México.
 
-        The scraper retrieves product titles, prices, images, URLs, and fulfillment status, structures the data with Pandas, and exports the results to an Excel file.
-
-        Built with a modular design and clean data handling, this project demonstrates practical experience with HTTP requests, HTML parsing, and data processing, and can be easily integrated into applications such as Streamlit dashboards.
-
-        Tech stack: \n
-        - Python \n
-        - Requests \n
-        - BeautifulSoup \n
-        - Pandas
+        Tech stack:
+        - Python
+        - Requests
+        - Backend (BeautifulSoup / Selenium)
         """
-        )
+    )
     st.divider()
     st.video("https://www.youtube.com/watch?v=sF80I-TQiW0")
