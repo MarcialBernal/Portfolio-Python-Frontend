@@ -1,8 +1,14 @@
-from services.web_scraper.gateways import ScraperGateway
+from .gateways import BooksGateway
 
-class ScraperUsecase:
+# ============================================================
+#                           BOOKS
+# ============================================================
+class BooksUsecase:
     def __init__(self):
-        self.gateway = ScraperGateway()
+        self.gateway = BooksGateway()
 
-    def search_items(self, query: str):
-        return self.gateway.search_items(query)
+    def list_random_books(self, limit: int = 10):
+        return self.gateway.get_random_books(limit=limit)
+
+    def list_top_books(self, limit: int = 10):
+        return self.gateway.get_top_books(limit=limit)

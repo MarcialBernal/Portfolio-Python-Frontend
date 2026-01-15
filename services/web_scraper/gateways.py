@@ -1,17 +1,21 @@
 import requests
 import os
 
-BASE_URL = os.getenv("SCRAPER_API_URL", "http://localhost:8000")  
+BASE_URL = os.getenv("SCRAPER_API_URL", "http://localhost:8000/webscraper")
 
-class ScraperGateway:
+# ============================================================
+#                         BOOKS
+# ============================================================
+class BooksGateway:
     def __init__(self):
         self.base_url = BASE_URL
 
-    def search_items(self, query: str):
-        try:
-            r = requests.get(f"{self.base_url}/scraper?query={query}", timeout=15)
-            r.raise_for_status()
-            return r.json()  
-        except requests.RequestException as e:
-            print(f"Error calling backend: {e}")
-            return []
+    def get_random_books(self, limit: int = 10):
+        r = requests.get(f"{self.base_url}/books/random", params={"limit": limit})
+        r.raise_for_status()
+        return r.json()
+
+    def get_top_books(self, limit: int = 10):
+        r = requests.get(f"{self.base_url}/books/top", params={"limit": limit})
+        r.raise_for_status()
+        return r.json()
