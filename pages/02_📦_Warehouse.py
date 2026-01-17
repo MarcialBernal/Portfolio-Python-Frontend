@@ -1,5 +1,10 @@
 import streamlit as st
 import pandas as pd
+import time
+from ui.sidebar import render_sidebar
+
+render_sidebar()
+
 
 from services.warehouse.usecases import ItemsUsecase, CategoriesUsecase, SectionsUsecase
 
@@ -44,11 +49,33 @@ def refresh_cache():
     st.cache_data.clear()
 
 # ============================================================
-#   TITLE
+#   TITLE + ABOUT (TOP ROW)
 # ============================================================
 
-st.title("📦 Warehouse Dashboard")
-st.write("Manage Items, Categories and Sections")
+title_col, about_col = st.columns([1, 1])
+
+with title_col:
+    title_placeholder = st.empty()
+    title_text = "📦 Warehouse Dashboard"
+
+    for i in range(1, len(title_text) + 1):
+        title_placeholder.markdown(f"# {title_text[:i]}")
+        time.sleep(0.03)
+
+
+with about_col:
+    st.subheader("About this project")
+    st.markdown("""
+                This application is a warehouse management dashboard that makes it easy to view and manage inventory in one place.
+
+                You can browse all stored items, check their quantities, prices, categories, and storage sections,  
+                as well as create new entries, update existing ones, search for specific items, or remove them when needed.  
+                All of this happens through a FastAPI backend connected to a database and hosted on Render.
+
+                The front-end is built with Streamlit and communicates with the backend through REST endpoints,  
+                making this project a practical example of working with APIs, databases, and full CRUD workflows  
+                in a real-world-style application.
+                """)
 
 # ============================================================
 #   TABS
