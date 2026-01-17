@@ -1,24 +1,36 @@
 import streamlit as st
 import pandas as pd
+import time
 from services.data_visual import Plots
+from ui.sidebar import render_sidebar
 
-st.set_page_config(
-    page_title="Data Visualization", 
-    page_icon="📊",
-    layout= "wide",
-    )
+render_sidebar()
 
-st.markdown("# 📊 Data Visualization")
+
+st.set_page_config(page_title="Data Visualization", page_icon="📊",layout= "wide",)
+
+title_placeholder = st.empty()
+title_text = "📊 Data Visualization"
+
+for i in range(1, len(title_text) + 1):
+    title_placeholder.markdown(f"# {title_text[:i]}")
+    time.sleep(0.03)
+
 
 with st.expander("Introduction", expanded=True):
     st.markdown("""
-                A dashboard built with Python, Pandas, Plotly, and Streamlit to demonstrate practical data visualization and analysis skills.
-                The application processes uploaded DataFrames, allowing users to explore data through multiple visualization types and customizable parameters.
-                It showcases proficiency in data manipulation, interactive plotting, and front-end integration for analytical tools.
-                
-                
-                Developed to illustrate my ability to build user-driven, data-centric interfaces that combine clarity, interactivity, and functionality.
+                This project is an interactive data visualization dashboard built with Python, Pandas, Plotly, and Streamlit.  
+                It allows users to explore datasets in a flexible and visual way.
+
+                The app comes with a built-in CSV dataset, but users can also upload their own CSV files to explore.  
+                Once loaded, the dashboard enables selecting which columns to plot, choosing the X and Y axes, 
+                and picking the type of plot — all dynamically, as long as the data is compatible. 
+
+                The goal of the project is to demonstrate practical data analysis and visualization skills,  
+                allowing users to interact with data, generate plots, and gain insights quickly.  
+                It showcases the ability to combine data manipulation, interactive plotting, and a user-friendly front-end.
                 """)
+    
     
 try:
     test_df = pd.read_csv('data/Mental_Health_and_Social_Media_Balance_Dataset.csv')

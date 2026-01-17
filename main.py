@@ -1,5 +1,7 @@
 import streamlit as st 
 from dotenv import load_dotenv
+import time
+from ui.sidebar import render_sidebar
 
 load_dotenv()
 
@@ -11,8 +13,15 @@ def main():
     )
     
     st.sidebar.success("Select a project above.")
+    
+    render_sidebar()
 
-    st.write("# Marcial Bernal 💻🐍")
+    title_placeholder = st.empty()
+    title_text = "Marcial Bernal 💻🐍"
+
+    for i in range(1, len(title_text) + 1):
+        title_placeholder.markdown(f"# {title_text[:i]}")
+        time.sleep(0.03)
     
     st.subheader("🙋‍♂️ Welcome")
     st.markdown("""

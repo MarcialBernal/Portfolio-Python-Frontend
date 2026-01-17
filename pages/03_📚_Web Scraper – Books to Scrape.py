@@ -1,11 +1,22 @@
 import streamlit as st
 import pandas as pd
-import os
+import io
+import time
 from datetime import datetime
 from services.web_scraper.usecases import BooksUsecase
+from ui.sidebar import render_sidebar
 
-st.set_page_config(layout="wide")
-st.title("📚 Web Scraper – Books to Scrape")
+render_sidebar()
+
+
+st.set_page_config(page_title="Web Scraper",page_icon="📚", layout="wide")
+title_placeholder = st.empty()
+title_text = "📚 Web Scraper – Books to Scrape"
+
+for i in range(1, len(title_text) + 1):
+    title_placeholder.markdown(f"# {title_text[:i]}")
+    time.sleep(0.03)
+
 
 books_uc = BooksUsecase()
 
@@ -42,19 +53,17 @@ with col1:
         df = pd.DataFrame(st.session_state["data"])
         st.dataframe(df, use_container_width=True)
 
-        os.makedirs("tmp", exist_ok=True)
-        file_name = os.path.join(
-            "tmp", f"books_{datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
-        )
-        df.to_excel(file_name, index=False)
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+            df.to_excel(writer, index=False)
+        buffer.seek(0)
 
-        with open(file_name, "rb") as f:
-            st.download_button(
-                label="⬇️ Download Excel",
-                data=f,
-                file_name="books.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
+        st.download_button(
+            label="⬇️ Download Excel",
+            data=buffer,
+            file_name="books.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
     else:
         st.info("Click a button to fetch books.")
 
@@ -62,25 +71,16 @@ with col1:
 #                    ABOUT (RIGHT)
 # ============================================================
 with col2:
-    st.markdown("### About this project")
+    st.subheader("About this project")
+    st.markdown("""
+                This is a Python-based web scraping project that collects data from the *Books to Scrape* website using BeautifulSoup.  
+                The scraper extracts information such as book title, price, image URL, book URL, rating, and availability.  
 
-    st.markdown(
-        """
-        Python-based **web scraping project** using *Books to Scrape*.
+                It can generate a list of random books with their details, and it also provides a list of top-rated books (5⭐) as recommendations.
 
-        **Features**
-        - Random book discovery
-        - Top-rated (5⭐) books
-        - Export to Excel
-
-        **Tech stack**
-        - Python
-        - Requests
-        - BeautifulSoup
-        - FastAPI
-        - Streamlit
-        """
-    )
+                The project features a Streamlit front-end connected to a FastAPI backend hosted on Render.  
+                The front-end interacts with the backend through endpoints that trigger the scraping script and return the results to the user.
+                """)
 
     st.divider()
     st.video("https://www.youtube.com/watch?v=sF80I-TQiW0")
