@@ -13,8 +13,8 @@ def render_sidebar():
             use_container_width=True
         )
 
-    st.sidebar.markdown("### 📧 Send me an email:")
-    st.sidebar.write("marcialb9328@gmail.com")
+    #st.sidebar.markdown("### 📧 Send me an email:")
+    #st.sidebar.write("marcialb9328@gmail.com")
     
     st.sidebar.error(
     "🚨 Please note\n\n"

@@ -58,11 +58,19 @@ with title_col:
     title_placeholder = st.empty()
     title_text = "📦 Warehouse Dashboard"
 
-    for i in range(1, len(title_text) + 1):
-        title_placeholder.markdown(f"# {title_text[:i]}")
-        time.sleep(0.03)
+    if "warehouse_title_done" not in st.session_state:
+        st.session_state["warehouse_title_done"] = False
+
+    if not st.session_state["warehouse_title_done"]:
+        for i in range(1, len(title_text) + 1):
+            title_placeholder.markdown(f"# {title_text[:i]}")
+            time.sleep(0.03)
+        st.session_state["warehouse_title_done"] = True
+    else:
+        title_placeholder.markdown(f"# {title_text}")
 
 
+####
 with about_col:
     st.subheader("About this project")
     st.markdown("""
