@@ -11,11 +11,19 @@ assistant = AssistantClient()
 title_placeholder = st.empty()
 title_text = "🏋️ Gym Assistant"
 
-for i in range(1, len(title_text) + 1):
-    title_placeholder.markdown(f"# {title_text[:i]}")
-    time.sleep(0.03)
+if "gym_title_done" not in st.session_state:
+    st.session_state["gym_title_done"] = False
+
+if not st.session_state["gym_title_done"]:
+    for i in range(1, len(title_text) + 1):
+        title_placeholder.markdown(f"# {title_text[:i]}")
+        time.sleep(0.03)
+    st.session_state["gym_title_done"] = True
+else:
+    title_placeholder.markdown(f"# {title_text}")
 
 
+####
 col1, col2 = st.columns([1, 1])
 
 with col1:

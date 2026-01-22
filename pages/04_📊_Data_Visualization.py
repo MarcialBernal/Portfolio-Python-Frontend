@@ -12,11 +12,19 @@ st.set_page_config(page_title="Data Visualization", page_icon="📊",layout= "wi
 title_placeholder = st.empty()
 title_text = "📊 Data Visualization"
 
-for i in range(1, len(title_text) + 1):
-    title_placeholder.markdown(f"# {title_text[:i]}")
-    time.sleep(0.03)
+if "dataviz_title_done" not in st.session_state:
+    st.session_state["dataviz_title_done"] = False
+
+if not st.session_state["dataviz_title_done"]:
+    for i in range(1, len(title_text) + 1):
+        title_placeholder.markdown(f"# {title_text[:i]}")
+        time.sleep(0.03)
+    st.session_state["dataviz_title_done"] = True
+else:
+    title_placeholder.markdown(f"# {title_text}")
 
 
+####
 with st.expander("Introduction", expanded=True):
     st.markdown("""
                 This project is an interactive data visualization dashboard built with Python, Pandas, Plotly, and Streamlit.  

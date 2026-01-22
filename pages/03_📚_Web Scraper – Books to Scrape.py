@@ -10,14 +10,23 @@ render_sidebar()
 
 
 st.set_page_config(page_title="Web Scraper",page_icon="📚", layout="wide")
+
 title_placeholder = st.empty()
 title_text = "📚 Web Scraper – Books to Scrape"
 
-for i in range(1, len(title_text) + 1):
-    title_placeholder.markdown(f"# {title_text[:i]}")
-    time.sleep(0.03)
+if "scraper_title_done" not in st.session_state:
+    st.session_state["scraper_title_done"] = False
+
+if not st.session_state["scraper_title_done"]:
+    for i in range(1, len(title_text) + 1):
+        title_placeholder.markdown(f"# {title_text[:i]}")
+        time.sleep(0.03)
+    st.session_state["scraper_title_done"] = True
+else:
+    title_placeholder.markdown(f"# {title_text}")
 
 
+####
 books_uc = BooksUsecase()
 
 col1, col2 = st.columns([3, 2])
