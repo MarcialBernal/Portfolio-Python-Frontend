@@ -49,8 +49,13 @@ def main():
     ]
 
     skill_to_pages = {
-        "🤖 Machine Learning": [],
-        "📊 Data Analysis": ["pages/04_📊_Data_Visualization.py"],
+        "🤖 Machine Learning": [
+            "pages/02_🪙_Bit_Coin_Prediction.py"],
+        
+        "📊 Data Analysis": [
+            "pages/04_📊_Data_Visualization.py",
+            "pages/02_🪙_Bit_Coin_Prediction.py"],
+        
         "🌐 API Consumption": [
             "pages/01_🏋️_Gym_Assistant.py",
             "pages/05_🎮_API_RAWG.py",
@@ -60,7 +65,9 @@ def main():
             "pages/06_📄_File_Converter.py",
         ],
         "✨ Generative AI": ["pages/01_🏋️_Gym_Assistant.py"],
+        
         "🕷️ Web Scraping": ["pages/03_📚_Web Scraper – Books to Scrape.py"],
+        
         "🔌 REST APIs": [
             "pages/01_🏋️_Gym_Assistant.py",
             "pages/02_📦_Warehouse.py",
@@ -70,11 +77,12 @@ def main():
 
     page_labels = {
         "pages/01_🏋️_Gym_Assistant.py": "🏋️ Gym Assistant",
-        "pages/02_📦_Warehouse.py": "📦 Warehouse",
-        "pages/03_📚_Web Scraper – Books to Scrape.py": "📚 Web Scraper – Books to Scrape",
+        "pages/02_🪙_Bit_Coin_Prediction.py": "🪙 Bit Coin Prediction",
+        "pages/03_📦_Warehouse.py": "📦 Warehouse",
         "pages/04_📊_Data_Visualization.py": "📊 Data Visualization",
         "pages/05_🎮_API_RAWG.py": "🎮 RAWG API Explorer",
-        "pages/06_📄_File_Converter.py": "📄 File Converter",
+        "pages/06_📚_Web Scraper – Books to Scrape.py": "📚 Web Scraper – Books to Scrape",
+        "pages/07_📄_File_Converter.py": "📄 File Converter",
     }
 
     selected_skill = None
