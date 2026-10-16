@@ -2,6 +2,7 @@ import streamlit as st
 from dotenv import load_dotenv
 import time
 from ui.sidebar import render_sidebar
+from ui.companion_popover import render_companion_popover
 
 load_dotenv()
 
@@ -120,6 +121,8 @@ def main():
 
     The goal isn’t just to show code, but to show how I design systems, integrate third-party services, and turn raw data into something useful, interactive, and real.
     """)
+    
+    render_companion_popover()
 
 
 if __name__ == "__main__":
